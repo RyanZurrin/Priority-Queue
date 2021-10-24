@@ -1,6 +1,5 @@
 #include "PriorityQueue.h"
 
-
 int main()
 {
 	int removed;
@@ -17,8 +16,11 @@ int main()
 	tq.Enqueue(9);
 	tq.Enqueue(10);
 	tq.Enqueue(16);
+
 	std::cout << "length: " << tq.getLength() << std::endl;
+
 	tq.ShowPQ();
+
 	tq.Dequeue(removed);
 	std::cout << "dequeued: " << removed << std::endl;
 	tq.ShowPQ();

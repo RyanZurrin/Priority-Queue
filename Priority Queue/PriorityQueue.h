@@ -46,6 +46,8 @@ public:
 
 	int getLength() const;
 
+	ItemType* getHeap();
+
 
 	/// <summary>
 	/// dispaly the priority queue
@@ -120,6 +122,12 @@ inline int PriorityQueue<ItemType>::getLength() const
 }
 
 template<class ItemType>
+inline ItemType* PriorityQueue<ItemType>::getHeap()
+{
+	return this->items.elements;
+}
+
+template<class ItemType>
 inline void PriorityQueue<ItemType>::ShowPQ()
 {
 	for (size_t i = 0; i < length - 1; i++)
@@ -133,4 +141,52 @@ template<class ItemType>
 inline PriorityQueue<ItemType>::~PriorityQueue()
 {
 	delete[] items.elements;
+}
+
+template<typename ItemType>
+void ReheapDown(ItemType items[], int root, int bottom)
+{ // NOT WORKING CORRECTLY
+	int maxChild = bottom;
+	int rightChild;
+	int leftChild;
+	leftChild = root * 2 + 1;
+	rightChild = root * 2 + 2;
+	if (leftChild <= bottom)
+	{
+		if (leftChild == bottom)
+		{
+			maxChild = leftChild;
+		}
+		else {
+			if (items[leftChild] <= items[rightChild])
+			{
+				maxChild = rightChild;
+			}
+			else
+			{
+				maxChild = leftChild;
+			}
+		}
+	}
+	if (items[root] < items[maxChild])
+	{
+		std::swap(items[root], items[items[maxChild]]);
+		ReheapDown(items, maxChild, bottom);
+	}
+}
+
+template<typename ItemType>
+void HeapSort(ItemType values[], int numValues)
+{
+	int index;
+	for (index = numValues / 2 - 1; index >= 0; index--)
+	{
+		ReheapDown(values, index, numValues - 1);
+	}
+	for (index = numValues - 1; index >= 1; index--)
+	{
+		std::swap(values[0], values[index]);
+		ReheapDown(values, 0, index - 1);
+
+	}
 }
